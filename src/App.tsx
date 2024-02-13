@@ -15,10 +15,15 @@ function App() {
 		console.log(data)
 	}
 	
+	const isName = _ => {
+		console.log('Вызвана')
+		return false
+	}
+	
 	return (
 		<>
 			<form onSubmit={handleSubmit(submit)}>
-				<input type='text' {...register('name')} />
+				<input type='text' {...register('name', { required: true, validate: isName })} />
 				<input type='number' {...register('age')} />
 				<button>Submit</button>
 			</form>
