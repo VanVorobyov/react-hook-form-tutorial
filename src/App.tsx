@@ -1,4 +1,4 @@
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
 import './App.css'
 
 interface IForm {
@@ -7,7 +7,7 @@ interface IForm {
 }
 
 function App() {
-	const { register, handleSubmit } = useForm<IForm>({
+	const { register, handleSubmit, clearErrors, formState: { errors } } = useForm<IForm>({
 		defaultValues: {}
 	})
 	
@@ -15,17 +15,17 @@ function App() {
 		console.log(data)
 	}
 	
-	const isName = _ => {
-		console.log('Вызвана')
-		return false
+	const error: SubmitErrorHandler<IForm> = data => {
+		console.log(data)
 	}
 	
 	return (
 		<>
-			<form onSubmit={handleSubmit(submit)}>
-				<input type='text' {...register('name', { required: true, validate: isName })} />
+			<form onSubmit={handleSubmit(submit, error)}>
+				<input type='text' {...register('name', { required: true })} aria-invalid={!!errors.name} />
 				<input type='number' {...register('age')} />
 				<button>Submit</button>
+				<button type='button' onClick={() => clearErrors()}>Clear errors</button>
 			</form>
 		</>
 	)
