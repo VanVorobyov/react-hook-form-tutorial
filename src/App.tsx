@@ -7,8 +7,10 @@ interface IForm {
 }
 
 function App() {
-	const { register, handleSubmit, clearErrors, formState: { errors } } = useForm<IForm>({
-		defaultValues: {}
+	const { register, handleSubmit, reset, formState: { errors } } = useForm<IForm>({
+		defaultValues: {
+			age: 18
+		}
 	})
 	
 	const submit: SubmitHandler<IForm> = data => {
@@ -25,7 +27,11 @@ function App() {
 				<input type='text' {...register('name', { required: true })} aria-invalid={!!errors.name} />
 				<input type='number' {...register('age')} />
 				<button>Submit</button>
-				<button type='button' onClick={() => clearErrors()}>Clear errors</button>
+				<button type='button' onClick={() => reset({
+					age: 0,
+					name: ''
+				})}>Clear form
+				</button>
 			</form>
 		</>
 	)
