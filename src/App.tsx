@@ -7,7 +7,7 @@ interface IForm {
 }
 
 function App() {
-	const { register, handleSubmit, setValue, formState: { errors } } = useForm<IForm>({
+	const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<IForm>({
 		defaultValues: {
 			age: 18
 		}
@@ -27,11 +27,11 @@ function App() {
 				<input type='text' {...register('name', { required: true })} aria-invalid={!!errors.name} />
 				<input type='number' {...register('age')} />
 				<button>Submit
-				
-				
 				</button>
 				<button type='button' onClick={() => setValue('name', 'Bob')}>Set name</button>
 			</form>
+			{watch('name')}
+			{watch('age')}
 		</>
 	)
 }
